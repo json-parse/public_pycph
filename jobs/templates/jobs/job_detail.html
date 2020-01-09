@@ -1,0 +1,45 @@
+{% extends 'jobs/base.html' %}
+{% load job_filters %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mb-5">
+        <div class="mb-2 light-text">Created: {{ job.created_date|date:"N j, Y" }}</div>
+        <h1 class="mb-3">{{ job.title }}</h1>
+        <div class="row mb-1">
+            <div class="col-sm-6">
+                <span class="light-text">Company: </span>{{ job.company }}
+            </div>
+            <div class="col-sm-6">
+                <span class="light-text">Location: </span>{{ job.location|location }} {{ job.postcode }}
+            </div>
+        </div>
+        <div class="row">
+            {% if job.job_type != 1 %}
+            <div class="col-sm-6">
+                <span class="light-text">Job type: </span>{{ job.job_type|jobtype }}
+            </div>
+            {% endif %}
+            {% if job.seniority_level != 1 %}
+            <div class="col-sm-6">
+                <span class="light-text">Job seniority: </span>{{ job.seniority_level|seniority }}
+            </div>
+            {% endif %}
+        </div>
+        <hr>
+        <p>{{ job.text|linebreaksbr }}</p>
+        {% if job.apply_link %}
+            <a href="{{ job.apply_link }}" target="_blank" class="btn btn-primary btn-block mt-4">Apply</a>
+        {% endif %}
+    </div>
+    <div class="jumbotron light-bg col-lg-4 sidebar">
+        <a href="/jobs" class="mb-5">Other job offers: {{ other_jobs.count }}</a>
+        {% for other in other_jobs %}
+            <div class="mt-5">
+                <h5><a href="{% url 'job_detail' pk=other.pk %}">{{ other.title }}</a></h5>
+                <p>at {{ other.company }}, {{ other.location|location }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

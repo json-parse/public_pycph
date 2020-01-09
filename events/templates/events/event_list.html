@@ -1,0 +1,32 @@
+{% extends 'events/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+            {% for event in events %}
+            <div class="mb-5">
+                <div class="mb-2 light-text">
+                    {{ event.location }}
+                </div>
+                <h2><a href="{% url 'event_detail' pk=event.pk %}">{{ event.title }}</a></h2>
+                <h5>
+                {{ event.date }}
+                {% if event.end %}
+                    <span>-</span>
+                    {% if event.end|date:"N j, Y" == event.date|date:"N j, Y" %}
+                    <span>{{ event.end|date:"P" }}</span>
+                    {% else %}
+                    <span>{{ event.end }}</span>
+                    {% endif %}
+                {% endif %}
+                </h5>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="jumbotron light-bg col-lg-4 sidebar">
+        <h1 class="lead display-theme mb-5">Upcoming events: {{ events.count }}</h1>
+        <p class="mb-4"><a href="/jobs">Job offers: {{ jobs.count }}</a></p>
+        <p class="card-text"><a href="/news">News</a></p>
+    </div>
+</div>
+{% endblock %}

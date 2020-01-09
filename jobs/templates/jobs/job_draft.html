@@ -1,0 +1,38 @@
+{% extends 'jobs/base.html' %}
+{% load job_filters %}
+
+{% block content %}
+    <div class="mb-5 light-text card">
+        <div class="card-body">
+            <h5 class="card-title">Thanks for submitting a job offer</h5>
+            <p class="card-text">Your ad is awaiting approval from our team. Once your ad is approved, it will appear on our jobs section and will look like the following.</p>
+            <p class="card-text">If you would like to change something on your ad, you can submit a new job offer or get in touch with our team.</p>
+        </div>
+    </div>
+
+    <div class="mb-2 light-text">{{ job.created_date|date:"N j, Y" }}</div>
+    <h1 class="mb-3">{{ job.title }}</h1>
+    <div class="row mb-1">
+        <div class="col-6">
+            <span class="light-text">Company: </span>{{ job.company }}
+        </div>
+        <div class="col-6">
+            <span class="light-text">Location: </span>{{ job.location|location }} {{ job.postcode }}
+        </div>
+    </div>
+    <div class="row">
+        {% if job.job_type != 1 %}
+        <div class="col-6">
+            <span class="light-text">Job type: </span>{{ job.job_type|jobtype }}
+        </div>
+        {% endif %}
+        {% if job.seniority_level != 1 %}
+        <div class="col-6">
+            <span class="light-text">Job seniority: </span>{{ job.seniority_level|seniority }}
+        </div>
+        {% endif %}
+    </div>
+    <hr>
+    <p>{{ job.text|linebreaksbr }}</p>
+    <a href="{{ job.apply_link }}" class="btn btn-dark">Apply</a>
+{% endblock %}

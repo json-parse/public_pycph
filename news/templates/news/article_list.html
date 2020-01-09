@@ -1,0 +1,20 @@
+{% extends 'news/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 ">
+    {% for article in articles %}
+        <div class="mb-5">
+            <div class="mb-2 light-text">Published: {{ article.published_date|date:"N j, Y" }}</div>
+            <h2><a href="{% url 'article_detail' pk=article.pk %}">{{ article.title }}</a></h2>
+            <p>{{ article.text|truncatechars:200 }}</p>
+        </div>
+    {% endfor %}
+    </div>
+    <div class="jumbotron light-bg col-lg-4 sidebar">
+        <h1 class="lead display-theme mb-5">News</h1>
+        <p class="mb-4"><a href="/events">Upcoming events: {{ events.count }}</a></p>
+        <p class="card-text"><a href="/jobs">Job offers: {{ jobs.count }}</a></p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'jobs/base.html' %}
+{% load job_filters %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-8">
+        {% for job in approved_jobs %}
+        <div class="mb-5">
+            <div class="mb-2 light-text">Created: {{ job.created_date|date:"N j, Y" }}</div>
+            <h2><a href="{% url 'job_detail' pk=job.pk %}">{{ job.title }}</a></h2>
+            <p>
+            {% if job.seniority_level != 1 %}
+                <span>{{ job.seniority_level|seniority }}</span>
+            {% endif %}
+            {% if job.job_type != 1 %}
+                <span>{{ job.job_type|jobtype }}</span>
+            {% endif %}
+            {% if job.job_type != 1 or job.seniority_level != 1 %}
+                <span>position</span>
+                <br>
+            {% endif %}
+                <span class="display-theme">at {{ job.company }}, {{ job.location|location }}</span>
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="jumbotron light-bg col-lg-4 sidebar">
+        <h1 class="lead display-theme mb-4">Job offers: {{ approved_jobs.count }}</h1>
+        <a class="btn btn-primary mb-5" href="{% url 'job_new' %}">Add job</a>
+        <p class="mb-4"><a href="/events">Upcoming events: {{ events.count }}</a></p>
+        <p class="card-text"><a href="/news">News</a></p>
+    </div>
+</div> 
+{% endblock %}

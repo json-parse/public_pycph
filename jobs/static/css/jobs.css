@@ -1,0 +1,20 @@
+select {
+    color: #ccd3d6;
+    background-color: #001122;
+    border: 1px solid #102a44;
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill {
+  border: 1px solid #102a44;
+  -webkit-text-fill-color: #ccd3d6;
+  -webkit-box-shadow: 0 0 0px 1000px #001122 inset;
+  box-shadow: 0 0 0px 1000px #001122 inset;
+}
+
+.post-form textarea, .post-form input {
+    width: 100%;
+    background-color: #001122;
+    border: 1px solid #102a44;
+    color:#ccd3d6;
+}

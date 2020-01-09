@@ -1,0 +1,52 @@
+# pycph
+
+# the upstream component nginx needs to connect to
+upstream django {
+    server unix:///home/pycph/pycph/mysite.sock; # for a file socket
+    # server 127.0.0.1:8001; # for a web port socket (we'll use this first)
+}
+
+# configuration of the server
+server {
+    # the port your site will be served on
+    # the domain name it will serve for
+    server_name pycph.dk www.pycph.dk; # substitute your machine's IP address or FQDN
+    charset     utf-8;
+
+    # max upload size
+    client_max_body_size 75M;   # adjust to taste
+
+    location /static {
+        alias /home/pycph/pycph/static; # your Django project's static files - amend as required
+    }
+
+    # Finally, send all non-media requests to the Django server.
+    location / {
+        uwsgi_pass  django;
+        include     /home/pycph/pycph/mysite/uwsgi_params; # the uwsgi_params file you installed
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/pycph.dk/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/pycph.dk/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+}
+
+server {
+    if ($host = www.pycph.dk) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = pycph.dk) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen      80;
+    server_name pycph.dk www.pycph.dk;
+    return 404; # managed by Certbot
+}

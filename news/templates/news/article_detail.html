@@ -1,0 +1,23 @@
+{% extends 'news/base.html' %}
+
+{% block content %}
+{% if article.published_date %}
+<div class="row">
+    <div class="col-lg-8 mb-5">
+        <div class="mb-2 light-text">{{ article.published_date|date:"N j, Y" }}</div>
+        <h1>{{ article.title }}</h1>
+        <hr>
+        <p>{{ article.text|linebreaksbr }}</p>
+    </div>
+    <div class="jumbotron light-bg col-lg-4 sidebar">
+            <a href="/news" class="mb-5">Latest news</a>
+            {% for other in other_articles %}
+                <div class="mt-5">
+                    <h5><a href="{% url 'article_detail' pk=other.pk %}">{{ other.title }}</a></h5>
+                    <p class="card-text">{{ other.text|truncatechars:60 }}</p>
+                </div>
+            {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

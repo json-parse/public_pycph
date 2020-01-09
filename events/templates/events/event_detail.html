@@ -1,0 +1,71 @@
+{% extends 'events/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mb-5">
+        <h1 class="mb-3">{{ event.title }}</h1>
+        <div class="row mb-1">
+                <div class="col-sm-6">
+                    <h5 class="card-text">
+                        {{ event.date }}
+                        {% if event.end %}
+                            <span>-</span>
+                            {% if event.end|date:"N j, Y" == event.date|date:"N j, Y" %}
+                            <span>{{ event.end|date:"P" }}</span>
+                            {% else %}
+                            <span>{{ event.end }}</span>
+                            {% endif %}
+                        {% endif %}
+                    </h5>
+                </div>
+                <div class="col-sm-6">
+                    <p class="card-text">
+                        {{ event.location }}
+                        {% if event.address_line_1 %}
+                        <br>
+                        <span class="light-text">{{ event.address_line_1 }}</span>
+                        {% endif %}
+                        {% if event.address_line_2 %}
+                        <br>
+                        <span class="light-text">{{ event.address_line_2 }}</span>
+                        {% endif %}
+                        {% if event.postcode %}
+                        <br>
+                        <span class="light-text">{{ event.postcode }}</span>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        {% if event.link %}
+        <div class="row">
+            <div class="col">
+                <a href="{{ event.link }}" target="_blank">{{ event.link }}</a>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if event.description %}
+        <hr>
+        <p>{{ event.description|linebreaksbr }}</p>
+        {% endif %}
+    </div>
+    <div class="jumbotron light-bg col-lg-4 sidebar">
+        <a href="/events" class="mb-5">Other upcoming events: {{ other_events.count }}</a>
+        {% for other in other_events %}
+            <div class="mt-5">
+                <h5><a href="{% url 'event_detail' pk=other.pk %}">{{ other.title }}</a></h5>
+                <p>{{ other.date }}
+                    {% if other.end %}
+                        <span>-</span>
+                        {% if other.end|date:"N j, Y" == other.date|date:"N j, Y" %}
+                        <span>{{ other.end|date:"P" }}</span>
+                        {% else %}
+                        <span>{{ other.end }}</span>
+                        {% endif %}
+                    {% endif %}
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

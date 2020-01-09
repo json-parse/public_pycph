@@ -1,0 +1,14 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Pycph Jobs</title>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/jobs.css' %}">
+{% endblock %}
+
+{% block menu %}
+<a href="{% url 'job_new' %}" class="top-menu"><div class="btn btn-outline-light">Add job</div></a>
+{% endblock %}
