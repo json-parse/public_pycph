@@ -1,7 +1,7 @@
 from django.test import TestCase, RequestFactory
 from django.utils import timezone
 from jobs.models import Job
-from jobs.views import job_list, job_detail, job_draft
+from jobs.views import job_list, job_detail, job_draft, job_new
 
 class JobTestCase(TestCase):
     def setUp(self):
@@ -43,4 +43,9 @@ class JobTestCase(TestCase):
         )
         request = self.factory.get('/')
         response = job_detail(request, pk=self.job.pk)
+        self.assertEqual(response.status_code, 200)
+    
+    def test_job_new(self):
+        request = self.factory.get('/')
+        response = job_new(request)
         self.assertEqual(response.status_code, 200)

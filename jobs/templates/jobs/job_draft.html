@@ -2,7 +2,7 @@
 {% load job_filters %}
 
 {% block content %}
-    <div class="mb-5 light-text card">
+    <div class="mb-5 light-bg card">
         <div class="card-body">
             <h5 class="card-title">Thanks for submitting a job offer</h5>
             <p class="card-text">Your ad is awaiting approval from our team. Once your ad is approved, it will appear on our jobs section and will look like the following.</p>
@@ -34,5 +34,5 @@
     </div>
     <hr>
     <p>{{ job.text|linebreaksbr }}</p>
-    <a href="{{ job.apply_link }}" class="btn btn-dark">Apply</a>
+    <a href="{{ job.apply_link }}" class="btn btn-primary">Apply</a>
 {% endblock %}
